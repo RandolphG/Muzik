@@ -1,22 +1,23 @@
 import React, { Component } from "react";
+import { render } from "react-dom";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 import { Layout, Menu, Breadcrumb, Avatar, Row, Col } from "antd";
 
 import ReactPlayer from "react-player";
-import ProgressBar from "./components/progress";
-import Control from "./components/Control";
-import VolumeComponent from "./components/volume";
-import MusicList from "./components/list";
+import ProgressBar from "../components/progress";
+import Control from "./Control";
+import VolumeComponent from "../components/volume";
+import MusicList from "../components/list";
 import { createClient } from "contentful";
-import "./App.css";
+import "../App.css";
 
 const { Header, Content, Footer } = Layout;
 const test_music_url =
   "https://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(
       this
     );
@@ -220,7 +221,7 @@ class App extends Component {
                   <img
                     src={playingURL[0].image}
                     style={{
-                      borderRadius: "50%",
+                      "border-radius": "50%",
                       height: "300px",
                       width: "300px"
                     }}
@@ -230,7 +231,7 @@ class App extends Component {
                     <img
                       src="https://res.cloudinary.com/alick/image/upload/v1502444310/Goodbye_hpubmk.jpg"
                       style={{
-                        borderRadius: "50%",
+                        "border-radius": "50%",
                         height: "300px",
                         width: "300px",
                         float: "left"
@@ -251,7 +252,7 @@ class App extends Component {
         </Content>
 
         <Footer style={{ textAlign: "center" }}>
-          ©2020 Created by poplogics
+          ©2017 Created by Zeyu Wang
         </Footer>
       </Layout>
     );
