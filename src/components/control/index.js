@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import PureRenderMixin from "react-addons-pure-render-mixin";
-import Icon from "antd/lib/icon";
-
-import "../App.css";
+import {
+  StepBackwardOutlined,
+  CaretRightOutlined,
+  StepForwardOutlined,
+  PauseOutlined
+} from "@ant-design/icons";
+import "../../App.css";
 
 export default class Control extends Component {
   constructor(props) {
@@ -16,25 +20,25 @@ export default class Control extends Component {
   render() {
     return (
       <div>
-        <Icon
+        <StepBackwardOutlined
           type="step-backward"
           style={{ fontSize: 34, paddingRight: "20px" }}
           onClick={this.props.leftChangeSong}
         />
         {this.props.state === false ? (
-          <Icon
+          <CaretRightOutlined
             type="caret-right"
             style={{ fontSize: 34, paddingRight: "20px" }}
             onClick={this.props.changeStatus}
           />
         ) : (
-          <Icon
+          <PauseOutlined
             type="pause"
             style={{ fontSize: 34, paddingRight: "20px" }}
             onClick={this.props.changeStatus}
           />
         )}
-        <Icon
+        <StepForwardOutlined
           type="step-forward"
           style={{ fontSize: 34 }}
           onClick={this.props.rightChangeSong}
