@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import PureRenderMixin from "react-addons-pure-render-mixin";
-import { Layout, Menu, Breadcrumb, Avatar, Row, Col } from "antd";
-
+import { Layout, Row, Col } from "antd";
+import { SketchOutlined } from "@ant-design/icons";
 import ReactPlayer from "react-player";
 import ProgressBar from "./components/progress";
-import Control from "./components/Control";
+import Control from "./components/control";
 import VolumeComponent from "./components/volume";
 import MusicList from "./components/list";
 import { createClient } from "contentful";
 import "./App.css";
 
 const { Header, Content, Footer } = Layout;
-const test_music_url =
-  "https://res.cloudinary.com/alick/video/upload/v1502689683/Luis_Fonsi_-_Despacito_ft._Daddy_Yankee_uyvqw9.mp3";
 
 class App extends Component {
   constructor(props) {
@@ -132,128 +130,79 @@ class App extends Component {
       item => item.id === this.state.playingId
     );
     return (
-      <Layout>
+      <div className={"player"}>
         <Header className="header-layout" style={{ width: "100%" }}>
-          <img
-            className="logo"
-            src="https://cdn-images-1.medium.com/max/512/1*qUlxDdY3T-rDtJ4LhLGkEg.png"
-          />
-          <h1>React FM</h1>
+          <p>
+            <SketchOutlined style={{ marginLeft: 10, marginRight: 10 }} />
+            MUZIK
+          </p>
         </Header>
-        <Content style={{ padding: "0 50px", marginTop: 14 }}>
+        {playingURL.length > 0 ? (
+          <ReactPlayer
+            url={playingURL[0].url}
+            playing={this.state.status}
+            height={0}
+            onProgress={data => {
+              this.setState({
+                loadingTime: data.loadedSeconds,
+                playingTime: data.playedSeconds
+              });
+            }}
+            volume={this.state.volume / 100}
+            onEnded={() => {
+              this.autoPlay();
+            }}
+          />
+        ) : (
+          <div>NOTHING HERE</div>
+        )}
+        <div className={"player"}>
           {playingURL.length > 0 ? (
-            <ReactPlayer
-              url={playingURL[0].url}
-              playing={this.state.status}
-              height={0}
-              onProgress={data => {
-                this.setState({
-                  loadingTime: data.loadedSeconds,
-                  playingTime: data.playedSeconds
-                });
-              }}
-              volume={this.state.volume / 100}
-              onEnded={() => {
-                this.autoPlay();
-              }}
+            <Row className={"title"}>
+              <p>{playingURL[0].name}</p>
+              <p>{playingURL[0].author}</p>
+            </Row>
+          ) : (
+            <div>NOTHING HERE</div>
+          )}
+          <ProgressBar
+            className={"title"}
+            loadingTime={this.state.loadingTime}
+            playingTime={this.state.playingTime}
+          />
+          <Control
+            className="control-panel"
+            state={this.state.status}
+            changeStatus={this.changePlayingStatus.bind(this)}
+            leftChangeSong={this.leftChangeSong.bind(this)}
+            rightChangeSong={this.rightChangeSong.bind(this)}
+          />
+          <VolumeComponent
+            addVolume={this.addVolume.bind(this)}
+            volume={this.state.volume}
+            deductVolume={this.deductVolume.bind(this)}
+          />
+          {playingURL.length > 0 ? (
+            <img
+              src={playingURL[0].image}
+              className={"songImg"}
+              alt={"song image"}
             />
           ) : (
-            <div></div>
-          )}
-          <div style={{ background: "#fff", padding: 24, minHeight: 300 }}>
-            <Row type="flex" justify="space-around" align="middle" style={{}}>
-              <Col span={12}>
-                {playingURL.length > 0 ? (
-                  <Row>
-                    <h1>{playingURL[0].name}</h1>
-                    <br />
-                    <h2>{playingURL[0].author}</h2>
-                    <br />
-                  </Row>
-                ) : (
-                  <div></div>
-                )}
-                <Row>
-                  <ProgressBar
-                    loadingTime={this.state.loadingTime}
-                    playingTime={this.state.playingTime}
-                  />
-                </Row>
-                <br />
-                <Row>
-                  <Col
-                    xs={{ span: 18 }}
-                    sm={{ span: 12 }}
-                    md={{ span: 8 }}
-                    lg={{ span: 8 }}
-                    xl={{ span: 6 }}
-                  >
-                    <Control
-                      className="control-panel"
-                      state={this.state.status}
-                      changeStatus={this.changePlayingStatus.bind(this)}
-                      leftChangeSong={this.leftChangeSong.bind(this)}
-                      rightChangeSong={this.rightChangeSong.bind(this)}
-                    />
-                  </Col>
-                </Row>
-                <br />
-                <br />
-                <br />
-                <br />
-                <Row>
-                  <VolumeComponent
-                    addVolume={this.addVolume.bind(this)}
-                    volume={this.state.volume}
-                    deductVolume={this.deductVolume.bind(this)}
-                  />
-                </Row>
-              </Col>
-              <Col
-                xs={{ span: 0 }}
-                sm={{ span: 0 }}
-                md={{ span: 8 }}
-                lg={{ span: 8 }}
-                xl={{ span: 6 }}
-              >
-                {playingURL.length > 0 ? (
-                  <img
-                    src={playingURL[0].image}
-                    style={{
-                      borderRadius: "50%",
-                      height: "300px",
-                      width: "300px"
-                    }}
-                  />
-                ) : (
-                  <div>
-                    <img
-                      src="https://res.cloudinary.com/alick/image/upload/v1502444310/Goodbye_hpubmk.jpg"
-                      style={{
-                        borderRadius: "50%",
-                        height: "300px",
-                        width: "300px",
-                        float: "left"
-                      }}
-                    />
-                  </div>
-                )}
-              </Col>
-            </Row>
-          </div>
-          <br />
-          <div style={{ background: "#fff", padding: 24, minHeight: 300 }}>
-            <MusicList
-              data={this.state.musicData}
-              clickChangeSong={this.clickChangeSong.bind(this)}
+            <img
+              src="https://res.cloudinary.com/alick/image/upload/v1502444310/Goodbye_hpubmk.jpg"
+              className={"songImg"}
+              alt={"alt image"}
             />
-          </div>
-        </Content>
-
-        <Footer style={{ textAlign: "center" }}>
-          ©2020 Created by poplogics
-        </Footer>
-      </Layout>
+          )}
+        </div>
+        <MusicList
+          className={"title"}
+          data={this.state.musicData}
+          clickChangeSong={this.clickChangeSong.bind(this)}
+        />
+        <Footer style={{ textAlign: "center" }}>poplogics app</Footer>
+      </div>
     );
   }
 }

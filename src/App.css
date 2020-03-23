@@ -9,3 +9,22 @@
     width: 90px;
     height: 60px;
 }
+
+.player{
+    text-align: center;
+    background: #FFFFFF;
+    padding: 25px;
+    min-height: 300px;
+}
+
+.title{
+    display: inline-block;
+}
+
+.songImg{
+    margin-top: 10px;
+    border-radius: 3px;
+    height: 125px;
+    width: 125px;
+    /*float: left*/
+}

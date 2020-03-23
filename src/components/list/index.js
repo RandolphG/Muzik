@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import PureRenderMixin from "react-addons-pure-render-mixin";
 import { Table } from "antd";
 
@@ -19,8 +18,8 @@ const columns = [
 ];
 
 class MusicList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(
       this
     );
@@ -40,11 +39,18 @@ class MusicList extends Component {
       };
     });
     return (
-      <div>
+      <div className={"title"}>
         <Table
+          onRow={(record, index, event) => {
+            return {
+              onClick: event => {
+                this.clickHandle(record, index, event);
+              }
+            };
+          }}
           dataSource={dataSource}
           columns={columns}
-          onRowClick={(record, index, event) => {
+          onClick={(record, index, event) => {
             this.clickHandle(record, index, event);
           }}
         />

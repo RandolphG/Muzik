@@ -9,6 +9,11 @@ import {
 import "../../App.css";
 
 export default class Control extends Component {
+  /** 
+   * TODO
+   *
+   * @param {TODO} props
+   */
   constructor(props) {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(
@@ -17,6 +22,10 @@ export default class Control extends Component {
     this.state = {};
   }
 
+  /** 
+   * TODO
+   * @return {!*}
+   */
   render() {
     return (
       <div>
