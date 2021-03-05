@@ -9,7 +9,7 @@ import {
 import "../../App.css";
 
 export default class Control extends Component {
-  /** 
+  /**
    * TODO
    *
    * @param {TODO} props
@@ -22,7 +22,7 @@ export default class Control extends Component {
     this.state = {};
   }
 
-  /** 
+  /**
    * TODO
    * @return {!*}
    */

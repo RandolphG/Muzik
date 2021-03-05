@@ -1,10 +1,10 @@
 # Muzik
 
 
-![Muzik](https://github.com/RandolphG/checkout-module/blob/master/public/_checkout-module.gif?raw=true)
+![Muzik](https://github.com/RandolphG/Muzik-React/blob/master/public/_muzik.gif?raw=true)
 
 
-## react checkout module
+## music app
 
 ### Installation process :
 
@@ -21,4 +21,6 @@ $ npm i
 $ npm start
 ```
 ## Features
-- music application that 
+- music application 
+- playlist
+- contentful cloud services
